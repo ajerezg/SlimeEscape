@@ -1,0 +1,38 @@
+extends PlayerState
+
+
+@export var air_state: PlayerState
+#@export var attack1_state: PlayerState
+
+
+func process_input(event: InputEvent):
+	if air_state.can_enter(event):
+		next_state = air_state
+	#elif attack1_state.can_enter(event):
+	#	next_state = attack1_state
+
+
+func run(delta):
+	if !player.is_on_floor():
+		next_state = air_state
+	else:
+		# prev calculations
+		var direction = Input.get_axis("left", "right")
+		#var mouse_vector = character.get_relative_mouse_position()
+		
+		#var is_moving = direction != 0
+		#var is_moving_where_looking = mouse_vector.x * direction >= 0
+		#var is_looking_left = mouse_vector.x < 0
+		# movement
+		player.move_x_axis(direction)
+		# animation
+		#if is_moving:
+		#	if is_moving_where_looking:
+		#		animation_player.play("run")
+		#	else:
+		#		animation_player.play_backwards("run")
+		#else:
+		animation_player.play("idle")
+		#sprite.flip_h = is_looking_left
+			
+	
