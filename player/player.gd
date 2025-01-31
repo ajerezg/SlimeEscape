@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 @onready var player_body_sprite_2d: Sprite2D = $PlayerBodySprite2D
 @onready var player_animation_player = $PlayerAnimationPlayer
 
@@ -9,14 +11,17 @@ extends CharacterBody2D
 @onready var attack_state_machine: PlayerAttackStateMachine = $AttackStateMachine
 @onready var idle_state: Node = $AttackStateMachine/IdleState
 
+@onready var label: PlayerLabel = $Label
 
 
-var gravity = 980.0
-var speed = 300.0
-var jump_velocity = -450.0
+var gravity := 980.0
+var speed := 300.0
+var jump_velocity := -450.0
+var wall_slide_velocity := 150.0
 
 
 func _ready() -> void:
+	label.player = self
 	movement_state_machine.current_state = ground_state
 	attack_state_machine.current_state = idle_state
 	#Initialize player movement states
@@ -40,15 +45,19 @@ func _input(event: InputEvent) -> void:
 	attack_state_machine.process_input(event)
 
 
-func jump():
+func jump() -> void:
 	velocity.y = jump_velocity
 
 
-func fall(delta, speed_factor=1):
+func fall(delta, speed_factor=1) -> void:
 	velocity.y += gravity * delta * speed_factor
 
 
-func move_x_axis(direction, speed_factor=1):
+func wall_slide(speed_factor=1) -> void:
+	velocity.y = wall_slide_velocity * speed_factor
+
+
+func move_x_axis(direction: float, speed_factor:=1.0):
 	if direction:
 		velocity.x = direction * speed * speed_factor
 	else:

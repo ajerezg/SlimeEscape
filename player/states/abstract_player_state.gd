@@ -2,7 +2,7 @@ class_name PlayerState
 
 extends Node
 
-var player: CharacterBody2D = null
+var player: Player = null
 var sprite_2d: Sprite2D = null
 var animation_player: AnimationPlayer = null
 var next_state: PlayerState = null
@@ -17,8 +17,10 @@ func run(delta):
 
 
 func can_enter(event: InputEvent):
-	assert(false, "Method can enter not implemented for " + name)
+	assert(false, "Method can_enter not implemented for " + name)
 
+func can_enter_middle_run():
+	assert(false, "Method can_enter_middle_run not implemented for "+ name)
 
 func on_enter():
 	pass

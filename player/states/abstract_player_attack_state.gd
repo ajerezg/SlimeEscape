@@ -2,7 +2,7 @@ class_name PlayerAttackState
 
 extends Node
 
-var player: CharacterBody2D = null
+var player: Player = null
 var next_state: PlayerAttackState = null
 
 

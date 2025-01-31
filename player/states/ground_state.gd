@@ -12,6 +12,10 @@ func process_input(event: InputEvent):
 	#	next_state = attack1_state
 
 
+func can_enter_middle_run():
+	return player.is_on_floor()
+
+
 func run(delta):
 	if !player.is_on_floor():
 		next_state = air_state
