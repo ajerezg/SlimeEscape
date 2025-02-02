@@ -6,7 +6,7 @@ extends PlayerState
 @export var ground_state: PlayerState
 @export var wall_slide_state: PlayerState
 
-var wall_jump_wait_time := 1.0
+var wall_jump_wait_time := 0.15
 var wall_jump_normal := 0.0
 
 var counter = 1
@@ -15,13 +15,18 @@ func _ready():
 	wall_jump_timer.one_shot = true
 	wall_jump_timer.wait_time = wall_jump_wait_time
 
+
 func process_input(event: InputEvent):
-	pass
+	if self.can_enter(event):
+		next_state = self
 	
 
-
 func can_enter(event: InputEvent):
-	return event.is_action_just_pressed("jump") and (player.is_on_floor() or player.is_on_wall_only())
+	var is_jumping = event.is_action_pressed("jump") and (player.is_on_floor() 
+		or player.is_on_wall_only())
+	var is_cancelling_wall_sliding = (event.is_action_pressed("down") and 
+		player.is_on_wall_only())
+	return is_jumping or is_cancelling_wall_sliding
 	
 
 func can_enter_middle_run():
@@ -67,8 +72,9 @@ func run(delta):
 	#sprite.flip_h = is_looking_left
 	if ground_state.can_enter_middle_run():
 		next_state = ground_state
-	elif wall_slide_state.can_enter_middle_run():
+	elif wall_jump_timer.is_stopped() and wall_slide_state.can_enter_middle_run():
 		next_state = wall_slide_state
+
 
 func get_name_str():
 	return name + " " + str(wall_jump_normal)
