@@ -9,7 +9,7 @@ class_name Player
 @onready var ground_state = $MovementStateMachine/GroundState
 
 @onready var attack_state_machine: PlayerAttackStateMachine = $AttackStateMachine
-@onready var idle_state: Node = $AttackStateMachine/IdleState
+@onready var idle_state: PlayerIdleAttackState = $AttackStateMachine/IdleState
 
 @onready var label: PlayerLabel = $Label
 
@@ -18,6 +18,10 @@ var gravity := 980.0
 var speed := 300.0
 var jump_velocity := -450.0
 var wall_slide_velocity := 150.0
+
+
+# TODO: erase these testing vars
+var basic_melee_attack_state := preload("res://player/basic_attack_state.tscn").instantiate()
 
 
 func _ready() -> void:
@@ -32,6 +36,9 @@ func _ready() -> void:
 	#Initialize player attack states
 	for child in attack_state_machine.get_children():
 		child.player = self
+	# TODO: erase these testing adds
+	self.add_attack(basic_melee_attack_state)
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -69,3 +76,19 @@ func get_relative_mouse_position(normalize:bool = false):
 	if normalize:
 		relative_position = relative_position.normalized()
 	return relative_position
+
+
+func get_current_movement_state():
+	return movement_state_machine.current_state
+
+
+func get_current_attack_state():
+	return attack_state_machine.current_state
+
+
+func add_attack(new_attack_state: PlayerAttackState):
+	# TODO: delete previous attack of the same type
+	new_attack_state.player = self
+	attack_state_machine.add_child(new_attack_state)
+	idle_state.primary_attack_state = new_attack_state
+	

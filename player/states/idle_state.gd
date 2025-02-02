@@ -1,11 +1,13 @@
 extends PlayerAttackState
 
-@export var attack_state: PlayerAttackState
+class_name PlayerIdleAttackState
+
+@export var primary_attack_state: PlayerAttackState
 
 
 func run(delta):
 	pass
 
 func process_input(event: InputEvent):
-	if attack_state.can_enter(event):
-		next_state = attack_state
+	if primary_attack_state != null and primary_attack_state.can_enter(event):
+		next_state = primary_attack_state
