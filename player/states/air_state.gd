@@ -9,7 +9,6 @@ extends PlayerState
 var wall_jump_wait_time := 0.15
 var wall_jump_normal := 0.0
 
-var counter = 1
 
 func _ready():
 	wall_jump_timer.one_shot = true
@@ -34,8 +33,6 @@ func can_enter_middle_run():
 		
 
 func on_enter():
-	counter += 1
-	print("air on enter " + str(counter))
 	if Input.is_action_pressed("jump") and (player.is_on_floor() or player.is_on_wall_only()):
 		player.jump()
 		if player.is_on_wall_only():
@@ -45,8 +42,6 @@ func on_enter():
 		
 
 func on_exit():
-	counter += 1
-	print("air on exit " + str(counter))
 	wall_jump_normal = 0.0
 
 

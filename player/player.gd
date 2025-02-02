@@ -13,6 +13,7 @@ class_name Player
 
 @onready var label: PlayerLabel = $Label
 
+var main_scene : Node2D
 
 var gravity := 980.0
 var speed := 300.0
@@ -22,9 +23,10 @@ var wall_slide_velocity := 150.0
 
 # TODO: erase these testing vars
 var basic_melee_attack_state := preload("res://player/basic_attack_state.tscn").instantiate()
-
+var basic_range_attack_state := preload("res://player/basic_range_attack_state.tscn").instantiate()
 
 func _ready() -> void:
+	main_scene = self.get_parent()
 	label.player = self
 	movement_state_machine.current_state = ground_state
 	attack_state_machine.current_state = idle_state
@@ -37,7 +39,9 @@ func _ready() -> void:
 	for child in attack_state_machine.get_children():
 		child.player = self
 	# TODO: erase these testing adds
-	self.add_attack(basic_melee_attack_state)
+	
+	self.add_secondary_attack(basic_range_attack_state)
+	self.add_primary_attack(basic_melee_attack_state)
 	
 
 
@@ -86,9 +90,17 @@ func get_current_attack_state():
 	return attack_state_machine.current_state
 
 
-func add_attack(new_attack_state: PlayerAttackState):
+func add_primary_attack(new_attack_state: PlayerAttackState):
 	# TODO: delete previous attack of the same type
 	new_attack_state.player = self
+	new_attack_state.idle_state = idle_state
 	attack_state_machine.add_child(new_attack_state)
 	idle_state.primary_attack_state = new_attack_state
+
+func add_secondary_attack(new_attack_state: PlayerAttackState):
+	# TODO: delete previous attack of the same type
+	new_attack_state.player = self
+	new_attack_state.idle_state = idle_state
+	attack_state_machine.add_child(new_attack_state)
+	idle_state.secondary_attack_state = new_attack_state
 	

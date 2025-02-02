@@ -5,11 +5,15 @@ extends PlayerAttackState
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite_2d: Sprite2D = $PlayerCenterPosition/Sprite2D
 @onready var player_center_position: Marker2D = $PlayerCenterPosition
-@onready var idle_state: Node = $"../IdleState"
 
-
-var attack_time := 0.4
+var attack_time := 0.2
 var rest_time := 0.1
+
+
+func _ready() -> void:
+	attack_timer.one_shot = true
+	rest_timer.one_shot = true
+
 
 func can_enter(event: InputEvent):
 	if event.is_action_pressed("primary_attack"):
@@ -30,9 +34,7 @@ func on_enter():
 func run(delta):
 	player_center_position.position = player.position
 	if !attack_timer.is_stopped():
-		animation_player.play("basic_melee_attack")
+		animation_player.play("attack")
 	else:
-		if !rest_timer.is_stopped():
-			animation_player.play("idle")
-		else:
-			next_state = idle_state
+		animation_player.play("idle")
+		next_state = idle_state

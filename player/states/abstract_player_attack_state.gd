@@ -2,6 +2,7 @@ class_name PlayerAttackState
 
 extends Node
 
+var idle_state: PlayerIdleAttackState
 var player: Player = null
 var next_state: PlayerAttackState = null
 
