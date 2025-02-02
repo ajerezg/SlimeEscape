@@ -31,10 +31,13 @@ func _process(delta: float) -> void:
 		self.queue_free()
 	elif !has_impacted and (duration_timer.is_stopped() or is_on_ceiling() or
 			is_on_floor() or is_on_wall()):
-		has_impacted = true
-		impact_timer.start()
-		animation_player.play("impacting")
-		velocity = Vector2.ZERO
+		impact()
 	elif !has_impacted:
 		animation_player.play("shooting")
 		move_and_slide()
+
+func impact():
+	has_impacted = true
+	impact_timer.start()
+	animation_player.play("impacting")
+	velocity = Vector2.ZERO
