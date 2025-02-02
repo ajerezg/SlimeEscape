@@ -31,7 +31,6 @@ func _process(delta: float) -> void:
 		self.queue_free()
 	elif !has_impacted and (duration_timer.is_stopped() or is_on_ceiling() or
 			is_on_floor() or is_on_wall()):
-		print("IMPACTED!")
 		has_impacted = true
 		impact_timer.start()
 		animation_player.play("impacting")

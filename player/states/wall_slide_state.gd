@@ -30,9 +30,3 @@ func run(delta):
 	elif air_state.can_enter_middle_run():
 		next_state = air_state
 	
-
-func on_enter():
-	print(name + "on_enter")
-
-func on_exit():
-	print(name + "on_exit")
