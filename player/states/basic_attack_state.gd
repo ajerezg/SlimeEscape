@@ -6,6 +6,8 @@ extends PlayerAttackState
 @onready var sprite_2d: Sprite2D = $PlayerCenterPosition/Sprite2D
 @onready var player_center_position: Marker2D = $PlayerCenterPosition
 
+@export var damage := 10
+
 var attack_time := 0.2
 var rest_time := 0.1
 
@@ -38,3 +40,8 @@ func run(delta):
 	else:
 		animation_player.play("idle")
 		next_state = idle_state
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy"):
+		area.get_parent().receive_hit(damage)

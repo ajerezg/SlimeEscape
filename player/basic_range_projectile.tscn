@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://0k0grxgxmmx5"]
+[gd_scene load_steps=9 format=3 uid="uid://0k0grxgxmmx5"]
 
 [ext_resource type="Script" path="res://player/basic_range_projectile.gd" id="1_sxcht"]
 [ext_resource type="Texture2D" uid="uid://d24kl3vtfirna" path="res://colored-transparent_packed.png" id="2_gmfwb"]
@@ -134,9 +134,11 @@ _data = {
 "shooting": SubResource("Animation_ak66u")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wv48k"]
+radius = 7.0
+
 [node name="BasicRangeProjectile" type="CharacterBody2D"]
 collision_layer = 8
-collision_mask = 5
 script = ExtResource("1_sxcht")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -157,3 +159,12 @@ libraries = {
 [node name="DurationTimer" type="Timer" parent="."]
 
 [node name="ImpactTimer" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="." groups=["player_projectile"]]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_wv48k")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

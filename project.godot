@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 window/stretch/mode="viewport"
 
+[global_group]
+
+player_projectile="player projectile, should damage enemies"
+enemy=""
+
 [input]
 
 left={

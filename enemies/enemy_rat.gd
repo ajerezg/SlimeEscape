@@ -24,3 +24,7 @@ func _physics_process(delta: float) -> void:
 	enemy_movement_state_machine.run_state(delta)
 	#attack_state_machine.run_state(delta)
 	move_and_slide()
+
+func receive_hit(damage: float):
+	hp -= damage
+	enemy_movement_state_machine.current_state.get_hit()

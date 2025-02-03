@@ -19,3 +19,6 @@ func run(delta):
 
 func can_enter_middle_run():
 	return enemy.is_on_floor()
+
+func get_hit():
+	next_state = get_hit_state

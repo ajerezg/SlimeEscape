@@ -1,14 +1,17 @@
 extends CharacterBody2D
 
+class_name BasicRangeProjectile
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var duration_timer: Timer = $DurationTimer
 @onready var impact_timer: Timer = $ImpactTimer
 
-var speed := 500.0
-var duration_time := 2.0
-var has_impacted = false
-var impact_time := 0.2
+@export var damage := 5.0
+@export var speed := 500.0
+@export var duration_time := 2.0
+@export var impact_time := 0.2
 
+var has_impacted = false
 var direction: float
 var spawn_position: Vector2
 var spawn_rotation: float
@@ -41,3 +44,9 @@ func impact():
 	impact_timer.start()
 	animation_player.play("impacting")
 	velocity = Vector2.ZERO
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy"):
+		area.get_parent().receive_hit(damage)
+		impact()
