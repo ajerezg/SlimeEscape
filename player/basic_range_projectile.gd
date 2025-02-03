@@ -5,7 +5,9 @@ class_name BasicRangeProjectile
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var duration_timer: Timer = $DurationTimer
 @onready var impact_timer: Timer = $ImpactTimer
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
+@export var hit_sound := preload("res://hit1.ogg")
 @export var damage := 5.0
 @export var speed := 500.0
 @export var duration_time := 2.0
@@ -49,4 +51,6 @@ func impact():
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy"):
 		area.get_parent().receive_hit(damage)
+		audio_stream_player_2d.set_stream(hit_sound)
+		audio_stream_player_2d.play()
 		impact()

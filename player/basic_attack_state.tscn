@@ -41,6 +41,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(25, 0)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PlayerCenterPosition/Sprite2D/Area2D:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_b0e3o"]
 resource_name = "attack"
@@ -82,6 +94,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(5, 0), Vector2(30, 0), Vector2(30, 0)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PlayerCenterPosition/Sprite2D/Area2D:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_8u3kj"]
 resource_name = "idle"
@@ -94,6 +118,18 @@ tracks/0/path = NodePath("PlayerCenterPosition/Sprite2D:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerCenterPosition/Sprite2D/Area2D:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -141,8 +177,11 @@ rotation = 1.5708
 scale = Vector2(0.5, 0.5)
 collision_layer = 8
 collision_mask = 4
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCenterPosition/Sprite2D/Area2D"]
 shape = SubResource("CircleShape2D_ld3qj")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="area_entered" from="PlayerCenterPosition/Sprite2D/Area2D" to="." method="_on_area_2d_area_entered"]
