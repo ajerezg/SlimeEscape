@@ -100,7 +100,6 @@ collision_layer = 2
 script = ExtResource("1_lmsf7")
 
 [node name="Label" type="Label" parent="."]
-visible = false
 offset_left = -20.0
 offset_top = -39.0
 offset_right = 20.0
@@ -137,6 +136,8 @@ wall_slide_state = NodePath("../WallSlideState")
 [node name="WallJumpTimer" type="Timer" parent="MovementStateMachine/AirState"]
 wait_time = 0.5
 one_shot = true
+
+[node name="NormalJumpTimer" type="Timer" parent="MovementStateMachine/AirState"]
 
 [node name="WallSlideState" type="Node" parent="MovementStateMachine" node_paths=PackedStringArray("ground_state", "air_state")]
 script = ExtResource("6_vvy2o")

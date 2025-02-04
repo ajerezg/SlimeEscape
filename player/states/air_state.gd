@@ -2,17 +2,21 @@ extends PlayerState
 
 
 @onready var wall_jump_timer: Timer = $WallJumpTimer
+@onready var normal_jump_timer: Timer = $NormalJumpTimer
 
 @export var ground_state: PlayerState
 @export var wall_slide_state: PlayerState
 
 var wall_jump_wait_time := 0.15
 var wall_jump_normal := 0.0
+var normal_jump_wait_time: = 0.15
 
 
 func _ready():
 	wall_jump_timer.one_shot = true
 	wall_jump_timer.wait_time = wall_jump_wait_time
+	normal_jump_timer.one_shot = true
+	normal_jump_timer.wait_time = normal_jump_wait_time
 
 
 func process_input(event: InputEvent):
@@ -23,9 +27,7 @@ func process_input(event: InputEvent):
 func can_enter(event: InputEvent):
 	var is_jumping = event.is_action_pressed("jump") and (player.is_on_floor() 
 		or player.is_on_wall_only())
-	var is_cancelling_wall_sliding = (event.is_action_pressed("down") and 
-		player.is_on_wall_only())
-	return is_jumping or is_cancelling_wall_sliding
+	return is_jumping 
 	
 
 func can_enter_middle_run():
@@ -33,16 +35,25 @@ func can_enter_middle_run():
 		
 
 func on_enter():
-	if Input.is_action_pressed("jump") and (player.is_on_floor() or player.is_on_wall_only()):
-		player.jump()
-		if player.is_on_wall_only():
-			wall_jump_normal = player.get_wall_normal().x
-			player.move_x_axis(wall_jump_normal)
-			wall_jump_timer.start()
+	print("ON ENTER airState")
+	wall_jump_timer.stop()
+	normal_jump_timer.stop()
+	normal_jump_timer.start()
+	if Input.is_action_pressed("jump"):
+		if Input.is_action_pressed("down"):
+			return
+		elif player.is_on_floor() or player.is_on_wall():
+			player.jump()
+			if player.is_on_wall_only():
+				wall_jump_normal = player.get_wall_normal().x
+				player.move_x_axis(wall_jump_normal)
+				wall_jump_timer.start()
 		
 
 func on_exit():
 	wall_jump_normal = 0.0
+	wall_jump_timer.stop()
+	normal_jump_timer.stop()
 
 
 func run(delta):
@@ -65,9 +76,11 @@ func run(delta):
 	#else:
 	#	animation_player.play("jump")
 	#sprite.flip_h = is_looking_left
-	if ground_state.can_enter_middle_run():
+	if normal_jump_timer.is_stopped() and ground_state.can_enter_middle_run():
+		print("entering groundState middle run")
 		next_state = ground_state
 	elif wall_jump_timer.is_stopped() and wall_slide_state.can_enter_middle_run():
+		print("entering wall_slide")
 		next_state = wall_slide_state
 
 

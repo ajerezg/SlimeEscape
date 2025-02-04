@@ -8,6 +8,7 @@ extends PlayerState
 func process_input(event: InputEvent):
 	if air_state.can_enter(event):
 		next_state = air_state
+		print("changin to air by event")
 	#elif attack1_state.can_enter(event):
 	#	next_state = attack1_state
 
@@ -17,8 +18,9 @@ func can_enter_middle_run():
 
 
 func run(delta):
-	if !player.is_on_floor():
+	if air_state.can_enter_middle_run():
 		next_state = air_state
+		print("changing to air mid run")
 	else:
 		# prev calculations
 		var direction = Input.get_axis("left", "right")

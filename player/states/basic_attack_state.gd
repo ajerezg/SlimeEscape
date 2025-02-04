@@ -31,8 +31,7 @@ func on_enter():
 	rest_timer.wait_time = attack_time + rest_time
 	attack_timer.start()
 	rest_timer.start()
-	var mouse_vector = player.get_relative_mouse_position()
-	player_center_position.look_at(player.get_global_mouse_position())
+	player_center_position.look_at(player.get_attack_direction())
 
 
 func run(delta):

@@ -19,7 +19,7 @@ var gravity := 980.0
 var speed := 300.0
 var jump_velocity := -450.0
 var wall_slide_velocity := 150.0
-
+var last_active_direction := Vector2.RIGHT
 
 # TODO: erase these testing vars
 var basic_melee_attack_state := preload("res://player/basic_attack_state.tscn").instantiate()
@@ -46,6 +46,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	get_attack_direction()
 	movement_state_machine.run_state(delta)
 	attack_state_machine.run_state(delta)
 	move_and_slide()
@@ -104,3 +105,17 @@ func add_secondary_attack(new_attack_state: PlayerAttackState):
 	attack_state_machine.add_child(new_attack_state)
 	idle_state.secondary_attack_state = new_attack_state
 	
+func get_attack_direction() -> Vector2:	
+	return _get_attack_direction_by_movement()
+
+func _get_attack_direction_by_movement() -> Vector2:
+	var direction := Vector2(Input.get_axis("left", "right"), 
+							 Input.get_axis("up", "down"))
+	if direction == Vector2.ZERO:
+		direction = last_active_direction
+	else:
+		last_active_direction = direction
+	return direction + global_position
+
+func _get_attack_direction_by_mouse() -> Vector2:
+	return get_global_mouse_position()

@@ -29,3 +29,4 @@ func on_exit():
 
 func get_name_str():
 	return name
+	
