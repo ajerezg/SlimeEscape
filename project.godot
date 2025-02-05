@@ -25,6 +25,7 @@ player_hitbox=""
 enemy_hurtbox=""
 enemy_hitbox=""
 player_hurtbox="player projectile, should damage enemies"
+player_checkpoint=""
 
 [input]
 

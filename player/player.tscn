@@ -1,7 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://b8k713ljirnd4"]
+[gd_scene load_steps=19 format=3 uid="uid://b8k713ljirnd4"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_lmsf7"]
-[ext_resource type="Script" path="res://player/label.gd" id="2_twxel"]
 [ext_resource type="Texture2D" uid="uid://d24kl3vtfirna" path="res://colored-transparent_packed.png" id="2_vrfrn"]
 [ext_resource type="Script" path="res://player/state_machine.gd" id="3_v51dr"]
 [ext_resource type="Script" path="res://player/states/ground_state.gd" id="4_v47b7"]
@@ -239,20 +238,31 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_2741a"]
 radius = 12.0416
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("get_hit_state", "hitbox_component")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("get_hit_state", "hitbox_component", "health_component")]
 collision_layer = 2
 script = ExtResource("1_lmsf7")
 get_hit_state = NodePath("MovementStateMachine/GetHitState")
 hitbox_component = NodePath("HitboxComponent")
+health_component = NodePath("HealthComponent")
 
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
 
 [node name="Label" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -39.0
+offset_top = -36.0
 offset_right = 20.0
-offset_bottom = -16.0
-script = ExtResource("2_twxel")
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+text = "as"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5gihe")

@@ -4,7 +4,9 @@ class_name Player
 
 @export var get_hit_state: PlayerState
 @export var hitbox_component: HitboxComponent
+@export var health_component: HealthComponent
 @export var invulnerability_duration := 1.0
+@export var respawn_global_position := Vector2.ZERO
 
 @onready var player_body_sprite_2d: Sprite2D = $PlayerBodySprite2D
 @onready var player_animation_player = $PlayerAnimationPlayer
@@ -17,7 +19,7 @@ class_name Player
 
 @onready var invulnerability_timer: Timer = $InvulnerabilityTimer
 
-@onready var label: PlayerLabel = $Label
+@onready var label: Label = $Label
 
 var main_scene : Node2D
 
@@ -36,7 +38,6 @@ func _ready() -> void:
 	invulnerability_timer.one_shot = true
 	invulnerability_timer.wait_time = invulnerability_duration
 	main_scene = self.get_parent()
-	label.player = self
 	movement_state_machine.current_state = ground_state
 	attack_state_machine.current_state = idle_state
 	#Initialize player movement states
@@ -51,11 +52,10 @@ func _ready() -> void:
 	
 	self.add_secondary_attack(basic_range_attack_state)
 	self.add_primary_attack(basic_melee_attack_state)
-	
-
 
 func _physics_process(delta: float) -> void:
 	# Overwrite the hitbox_detection
+	update_label()
 	if !invulnerability_timer.is_stopped():
 		hitbox_component.monitorable = false
 		# TODO: add animation to indicate invulnerability.
@@ -137,7 +137,14 @@ func _get_attack_direction_by_mouse() -> Vector2:
 func get_hit(damage: float):
 	invulnerability_timer.start()
 	movement_state_machine.current_state.next_state = get_hit_state
+	health_component.get_hit(damage)
 
 func get_killed():
-	print("Player should be dead!")
-	pass
+	global_position = respawn_global_position
+	health_component.health = health_component.MAX_HEALTH
+
+func set_checkpoint(position: Vector2) -> void:
+	respawn_global_position = position
+
+func update_label():
+	label.text = str(health_component.health)
