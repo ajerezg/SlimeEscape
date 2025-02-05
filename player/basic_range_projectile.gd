@@ -11,7 +11,7 @@ class_name BasicRangeProjectile
 @export var damage := 5.0
 @export var speed := 500.0
 @export var duration_time := 2.0
-@export var impact_time := 0.2
+@export var impact_time := 0.3
 
 var has_impacted = false
 var direction: float

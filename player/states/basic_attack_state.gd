@@ -11,7 +11,7 @@ extends PlayerAttackState
 @export var damage := 10
 
 var attack_time := 0.2
-var rest_time := 0.1
+var rest_time := 0.4
 
 
 func _ready() -> void:
@@ -38,7 +38,7 @@ func run(delta):
 	player_center_position.position = player.position
 	if !attack_timer.is_stopped():
 		animation_player.play("attack")
-	else:
+	elif rest_timer.is_stopped():
 		animation_player.play("idle")
 		next_state = idle_state
 
