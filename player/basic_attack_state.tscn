@@ -173,8 +173,9 @@ hframes = 49
 vframes = 22
 frame = 827
 
-[node name="HurtBoxComponent" parent="PlayerCenterPosition/Sprite2D" groups=["player_projectile"] instance=ExtResource("3_bkf5o")]
+[node name="HurtBoxComponent" parent="PlayerCenterPosition/Sprite2D" groups=["player_hurtbox"] instance=ExtResource("3_bkf5o")]
 monitoring = false
+monitorable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCenterPosition/Sprite2D/HurtBoxComponent"]
 shape = SubResource("CircleShape2D_qmydm")

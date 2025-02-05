@@ -21,8 +21,10 @@ window/stretch/mode="viewport"
 
 [global_group]
 
-player_projectile="player projectile, should damage enemies"
-enemy=""
+player_hitbox=""
+enemy_hurtbox=""
+enemy_hitbox=""
+player_hurtbox="player projectile, should damage enemies"
 
 [input]
 

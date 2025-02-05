@@ -2,6 +2,10 @@ extends CharacterBody2D
 
 class_name Player
 
+@export var get_hit_state: PlayerState
+@export var hitbox_component: HitboxComponent
+@export var invulnerability_duration := 1.0
+
 @onready var player_body_sprite_2d: Sprite2D = $PlayerBodySprite2D
 @onready var player_animation_player = $PlayerAnimationPlayer
 
@@ -10,6 +14,8 @@ class_name Player
 
 @onready var attack_state_machine: PlayerAttackStateMachine = $AttackStateMachine
 @onready var idle_state: PlayerIdleAttackState = $AttackStateMachine/IdleState
+
+@onready var invulnerability_timer: Timer = $InvulnerabilityTimer
 
 @onready var label: PlayerLabel = $Label
 
@@ -20,12 +26,15 @@ var speed := 300.0
 var jump_velocity := -450.0
 var wall_slide_velocity := 150.0
 var last_active_direction := Vector2.RIGHT
+var is_invulnerable := false
 
 # TODO: erase these testing vars
 var basic_melee_attack_state := preload("res://player/basic_attack_state.tscn").instantiate()
 var basic_range_attack_state := preload("res://player/basic_range_attack_state.tscn").instantiate()
 
 func _ready() -> void:
+	invulnerability_timer.one_shot = true
+	invulnerability_timer.wait_time = invulnerability_duration
 	main_scene = self.get_parent()
 	label.player = self
 	movement_state_machine.current_state = ground_state
@@ -46,6 +55,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# Overwrite the hitbox_detection
+	if !invulnerability_timer.is_stopped():
+		hitbox_component.monitorable = false
+		# TODO: add animation to indicate invulnerability.
 	get_attack_direction()
 	movement_state_machine.run_state(delta)
 	attack_state_machine.run_state(delta)
@@ -119,3 +132,12 @@ func _get_attack_direction_by_movement() -> Vector2:
 
 func _get_attack_direction_by_mouse() -> Vector2:
 	return get_global_mouse_position()
+
+
+func get_hit(damage: float):
+	invulnerability_timer.start()
+	movement_state_machine.current_state.next_state = get_hit_state
+
+func get_killed():
+	print("Player should be dead!")
+	pass

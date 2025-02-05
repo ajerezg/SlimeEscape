@@ -5,6 +5,7 @@ class_name EnemyRat
 @export var health_component: HealthComponent
 @export var get_hit_state: AbstractEnemyMovementState
 @export var get_killed_state: AbstractEnemyMovementState
+@export var damage := 5.0
 
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -34,3 +35,8 @@ func get_hit(damage: float):
 
 func get_killed():
 	enemy_movement_state_machine.current_state.next_state = get_killed_state
+
+
+func _on_hurt_box_component_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player_hitbox") and area is HitboxComponent:
+		area.get_hit(damage)

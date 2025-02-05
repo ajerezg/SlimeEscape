@@ -11,10 +11,8 @@ var next_state: PlayerState = null
 func process_input(event: InputEvent):
 	pass
 
-
 func run(delta):
 	assert(false, "Method run is not implemented for " + name)
-
 
 func can_enter(event: InputEvent):
 	assert(false, "Method can_enter not implemented for " + name)
@@ -25,10 +23,8 @@ func can_enter_middle_run():
 func on_enter():
 	pass
 
-
 func on_exit():
 	pass
-
 
 func get_name_str():
 	return name

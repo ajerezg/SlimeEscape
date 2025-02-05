@@ -1131,6 +1131,7 @@ position = Vector2(577, 493)
 stream = ExtResource("5_jvm1v")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("5_j8ymq")]
+position = Vector2(107, 529)
 enemy_scene = ExtResource("6_ss54u")
 
 [node name="EnemySpawner2" parent="." instance=ExtResource("5_j8ymq")]

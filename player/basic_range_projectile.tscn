@@ -163,8 +163,9 @@ libraries = {
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
-[node name="HurtBoxComponent" parent="." groups=["player_projectile"] instance=ExtResource("3_vn4xh")]
+[node name="HurtBoxComponent" parent="." groups=["player_hurtbox"] instance=ExtResource("3_vn4xh")]
 position = Vector2(0, 0)
+monitorable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
 shape = SubResource("CircleShape2D_rvj1e")
