@@ -42,9 +42,8 @@ func run(delta):
 		animation_player.play("idle")
 		next_state = idle_state
 
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	if area.is_in_group("enemy"):
-		area.get_parent().receive_hit(damage)
+func _on_hurt_box_component_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy") and area is HitboxComponent:
+		area.get_hit(damage)
 		audio_stream_player_2d.set_stream(hit_sound)
 		audio_stream_player_2d.play()

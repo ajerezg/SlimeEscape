@@ -2,8 +2,6 @@ class_name AbstractEnemyMovementState
 
 extends Node
 
-@export var get_hit_state: AbstractEnemyMovementState
-
 var enemy: AbstractEnemy = null
 var sprite_2d: Sprite2D = null
 var animation_player: AnimationPlayer = null
@@ -24,9 +22,6 @@ func on_exit():
 
 func get_name_str():
 	return name
-
-func get_hit():
-	pass
 
 func crash_on_wall():
 	var enemy_is_on_wall = enemy.is_on_wall()

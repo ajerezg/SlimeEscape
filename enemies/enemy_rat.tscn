@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://du8c0bkcj5yk8"]
+[gd_scene load_steps=18 format=3 uid="uid://du8c0bkcj5yk8"]
 
 [ext_resource type="Texture2D" uid="uid://d24kl3vtfirna" path="res://colored-transparent_packed.png" id="1_0o65p"]
 [ext_resource type="Script" path="res://enemies/enemy_rat.gd" id="1_s1m56"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://enemies/states/enemy_air_state.gd" id="4_rbc73"]
 [ext_resource type="Script" path="res://enemies/states/enemy_ground_state.gd" id="5_ol1bn"]
 [ext_resource type="Script" path="res://enemies/states/enemy_get_hit_state.gd" id="6_nhers"]
+[ext_resource type="PackedScene" uid="uid://dnf7kegi7l0lv" path="res://components/health_component.tscn" id="7_glvq2"]
+[ext_resource type="Script" path="res://enemies/states/enemy_death_state.gd" id="7_k5pw0"]
+[ext_resource type="PackedScene" uid="uid://bfhb3qi75d8tl" path="res://components/hitbox_component.tscn" id="8_a6ksp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ufp2y"]
 radius = 13.0
@@ -87,7 +90,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Area2D:monitorable")
+tracks/6/path = NodePath("HitboxComponent:monitorable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -176,7 +179,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Area2D:monitorable")
+tracks/6/path = NodePath("HitboxComponent:monitorable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -266,14 +269,14 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Area2D:monitorable")
+tracks/6/path = NodePath("HitboxComponent:monitorable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false, true]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_7up0w"]
@@ -356,7 +359,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Area2D:monitorable")
+tracks/6/path = NodePath("HitboxComponent:monitorable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -446,7 +449,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Area2D:monitorable")
+tracks/6/path = NodePath("HitboxComponent:monitorable")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -465,13 +468,16 @@ _data = {
 "walk": SubResource("Animation_f7xqw")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7wdf2"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_i5o6l"]
 radius = 13.0
 
-[node name="Enemy_rat" type="CharacterBody2D"]
+[node name="Enemy_rat" type="CharacterBody2D" node_paths=PackedStringArray("health_component", "get_hit_state", "get_killed_state")]
 collision_layer = 4
 platform_floor_layers = 1
 script = ExtResource("1_s1m56")
+health_component = NodePath("HealthComponent")
+get_hit_state = NodePath("EnemyMovementStateMachine/EnemyGetHitState")
+get_killed_state = NodePath("EnemyMovementStateMachine/EnemyDeathState")
 speed = 150.0
 
 [node name="Label" type="Label" parent="."]
@@ -505,15 +511,13 @@ libraries = {
 [node name="EnemyMovementStateMachine" type="Node" parent="."]
 script = ExtResource("3_wn3oy")
 
-[node name="EnemyAirState" type="Node" parent="EnemyMovementStateMachine" node_paths=PackedStringArray("ground_state", "get_hit_state")]
+[node name="EnemyAirState" type="Node" parent="EnemyMovementStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("4_rbc73")
 ground_state = NodePath("../EnemyGroundState")
-get_hit_state = NodePath("../EnemyGetHitState")
 
-[node name="EnemyGroundState" type="Node" parent="EnemyMovementStateMachine" node_paths=PackedStringArray("air_state", "get_hit_state")]
+[node name="EnemyGroundState" type="Node" parent="EnemyMovementStateMachine" node_paths=PackedStringArray("air_state")]
 script = ExtResource("5_ol1bn")
 air_state = NodePath("../EnemyAirState")
-get_hit_state = NodePath("../EnemyGetHitState")
 
 [node name="EnemyGetHitState" type="Node" parent="EnemyMovementStateMachine" node_paths=PackedStringArray("enemy_air_state", "enemy_ground_state")]
 script = ExtResource("6_nhers")
@@ -522,9 +526,19 @@ enemy_ground_state = NodePath("../EnemyGroundState")
 
 [node name="InvulnerabilityTimer" type="Timer" parent="EnemyMovementStateMachine/EnemyGetHitState"]
 
-[node name="Area2D" type="Area2D" parent="." groups=["enemy"]]
+[node name="EnemyDeathState" type="Node" parent="EnemyMovementStateMachine"]
+script = ExtResource("7_k5pw0")
+
+[node name="DeathTimer" type="Timer" parent="EnemyMovementStateMachine/EnemyDeathState"]
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("entity") instance=ExtResource("7_glvq2")]
+entity = NodePath("..")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("entity") groups=["enemy"] instance=ExtResource("8_a6ksp")]
 collision_layer = 4
 collision_mask = 8
+monitoring = false
+entity = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_7wdf2")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_i5o6l")

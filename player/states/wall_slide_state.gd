@@ -29,7 +29,7 @@ func run(delta):
 		next_state = ground_state
 	elif air_state.can_enter_middle_run():
 		next_state = air_state
-		print("changing to air")
+		#print("changing to air")
 	
 func on_enter():
 	#print("entering wallSlideState")

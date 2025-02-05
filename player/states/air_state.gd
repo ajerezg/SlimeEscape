@@ -35,7 +35,7 @@ func can_enter_middle_run():
 		
 
 func on_enter():
-	print("ON ENTER airState")
+	#print("ON ENTER airState")
 	wall_jump_timer.stop()
 	normal_jump_timer.stop()
 	normal_jump_timer.start()
@@ -77,10 +77,10 @@ func run(delta):
 	#	animation_player.play("jump")
 	#sprite.flip_h = is_looking_left
 	if normal_jump_timer.is_stopped() and ground_state.can_enter_middle_run():
-		print("entering groundState middle run")
+		#print("entering groundState middle run")
 		next_state = ground_state
 	elif wall_jump_timer.is_stopped() and wall_slide_state.can_enter_middle_run():
-		print("entering wall_slide")
+		#print("entering wall_slide")
 		next_state = wall_slide_state
 
 
