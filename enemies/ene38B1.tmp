@@ -535,7 +535,7 @@ radius = 13.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_t3ye2"]
 radius = 26.0
 
-[node name="Enemy_rat" type="CharacterBody2D" node_paths=PackedStringArray("health_component", "get_hit_state", "get_killed_state", "raycast_left", "raycast_right")]
+[node name="Enemy_rat" type="CharacterBody2D" node_paths=PackedStringArray("health_component", "get_hit_state", "get_killed_state")]
 collision_layer = 4
 platform_floor_layers = 1
 script = ExtResource("1_s1m56")
@@ -543,8 +543,6 @@ health_component = NodePath("HealthComponent")
 get_hit_state = NodePath("EnemyMovementStateMachine/EnemyGetHitState")
 get_killed_state = NodePath("EnemyMovementStateMachine/EnemyDeathState")
 speed = 150.0
-raycast_left = NodePath("RayCastLeft")
-raycast_right = NodePath("RayCastRight")
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -580,13 +578,14 @@ script = ExtResource("3_wn3oy")
 [node name="EnemyAirState" type="Node" parent="EnemyMovementStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("4_rbc73")
 ground_state = NodePath("../EnemyGroundState")
+gravity = null
 
 [node name="EnemyGroundState" type="Node" parent="EnemyMovementStateMachine" node_paths=PackedStringArray("air_state", "ray_cast_left", "ray_cast_right")]
 script = ExtResource("5_ol1bn")
 air_state = NodePath("../EnemyAirState")
 avoid_fall = true
-ray_cast_left = NodePath("../../RayCastLeftDown")
-ray_cast_right = NodePath("../../RayCastRightDown")
+ray_cast_left = NodePath("../../RayCast2D2")
+ray_cast_right = NodePath("../../RayCast2D")
 
 [node name="EnemyGetHitState" type="Node" parent="EnemyMovementStateMachine" node_paths=PackedStringArray("enemy_air_state", "enemy_ground_state")]
 script = ExtResource("6_nhers")
@@ -620,18 +619,10 @@ collision_mask = 2
 position = Vector2(-5, -9.09495e-12)
 shape = SubResource("CircleShape2D_t3ye2")
 
-[node name="RayCastRightDown" type="RayCast2D" parent="."]
-position = Vector2(16, 0)
-target_position = Vector2(0, 16)
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(16, 16)
 
-[node name="RayCastLeftDown" type="RayCast2D" parent="."]
-position = Vector2(-16, 0)
-target_position = Vector2(0, 16)
-
-[node name="RayCastLeft" type="RayCast2D" parent="."]
-target_position = Vector2(-17, 0)
-
-[node name="RayCastRight" type="RayCast2D" parent="."]
-target_position = Vector2(17, 0)
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+target_position = Vector2(-16, 16)
 
 [connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_hurt_box_component_area_entered"]

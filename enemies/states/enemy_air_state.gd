@@ -9,7 +9,7 @@ func _ready() -> void:
 
 func run(delta):
 	enemy.velocity.y += gravity * delta
-	crash_on_wall()
+	enemy.bounce_on_wall()
 	if ground_state.can_enter_middle_run():
 		next_state = ground_state
 

@@ -22,13 +22,3 @@ func on_exit():
 
 func get_name_str():
 	return name
-
-func crash_on_wall():
-	var enemy_is_on_wall = enemy.is_on_wall()
-	#var enemy_is_on_floor = enemy.is_on_floor()
-	var signs_are_different = sign(enemy.get_wall_normal().x) != sign(enemy.direction.x)
-	
-	if enemy.is_on_wall() and (sign(enemy.get_wall_normal().x) != sign(enemy.direction.x)):
-		#print("crashed!" + str(enemy.get_wall_normal()))
-		enemy.direction.x = -enemy.direction.x
-		enemy.velocity.x = enemy.direction.x * enemy.speed
