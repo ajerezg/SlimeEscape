@@ -2,6 +2,8 @@ class_name PlayerState
 
 extends Node
 
+@export var _can_attack := true
+
 var player: Player = null
 var sprite_2d: Sprite2D = null
 var animation_player: AnimationPlayer = null
@@ -28,3 +30,6 @@ func on_exit():
 
 func get_name_str():
 	return name
+
+func can_attack():
+	return _can_attack

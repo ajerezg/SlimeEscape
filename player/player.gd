@@ -23,10 +23,10 @@ class_name Player
 
 var main_scene : Node2D
 
-var gravity := 980.0
-var speed := 300.0
-var jump_velocity := -450.0
-var wall_slide_velocity := 150.0
+@export var gravity := 980.0
+@export var speed := 300.0
+@export var jump_velocity := -450.0
+@export var wall_slide_velocity := 150.0
 var last_active_direction := Vector2.RIGHT
 var is_invulnerable := false
 

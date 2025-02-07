@@ -2,12 +2,15 @@ extends PlayerState
 
 
 @export var air_state: PlayerState
+@export var dash_state: PlayerState
 #@export var attack1_state: PlayerState
 
 
 func process_input(event: InputEvent):
 	if air_state.can_enter(event):
 		next_state = air_state
+	elif dash_state.can_enter(event):
+		next_state = dash_state
 		#print("changin to air by event")
 	#elif attack1_state.can_enter(event):
 	#	next_state = attack1_state

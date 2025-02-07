@@ -6,6 +6,7 @@ extends PlayerState
 
 @export var ground_state: PlayerState
 @export var wall_slide_state: PlayerState
+@export var dash_state: PlayerState
 
 var wall_jump_wait_time := 0.15
 var wall_jump_normal := 0.0
@@ -22,6 +23,8 @@ func _ready():
 func process_input(event: InputEvent):
 	if self.can_enter(event):
 		next_state = self
+	elif dash_state.can_enter(event):
+		next_state = dash_state
 	
 
 func can_enter(event: InputEvent):

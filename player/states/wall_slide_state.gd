@@ -3,11 +3,14 @@ extends PlayerState
 
 @export var ground_state: PlayerState
 @export var air_state: PlayerState
+@export var dash_state: PlayerState
 
 
 func process_input(event: InputEvent):
 	if air_state.can_enter(event):
 		next_state = air_state
+	elif dash_state.can_enter(event):
+		next_state = dash_state
 
 
 func can_enter_middle_run():
@@ -25,6 +28,7 @@ func can_enter_middle_run():
 func run(delta):
 	player.move_x_axis(0)
 	player.wall_slide()
+	animation_player.play("jump")
 	if ground_state.can_enter_middle_run():
 		next_state = ground_state
 	elif air_state.can_enter_middle_run():
