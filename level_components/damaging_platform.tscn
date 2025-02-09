@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjt08o1scyg2t"]
+
+[ext_resource type="Script" path="res://level_components/damaging_platform.gd" id="1_pgehv"]
+[ext_resource type="Texture2D" uid="uid://d24kl3vtfirna" path="res://colored-transparent_packed.png" id="2_fj1ng"]
+[ext_resource type="PackedScene" uid="uid://ctqj4jsxym4pc" path="res://components/hurt_box_component.tscn" id="3_pqfff"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_06rhk"]
+size = Vector2(32, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmgsf"]
+size = Vector2(29.0001, 55.9999)
+
+[node name="DamagingPlatform" type="StaticBody2D"]
+script = ExtResource("1_pgehv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_fj1ng")
+hframes = 49
+vframes = 22
+frame = 22
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_06rhk")
+
+[node name="HurtBoxComponent" parent="." groups=["enemy_hurtbox"] instance=ExtResource("3_pqfff")]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(4.50005, -6.27619e-05)
+shape = SubResource("RectangleShape2D_hmgsf")
+
+[connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_hurt_box_component_area_entered"]
