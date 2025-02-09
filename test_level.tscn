@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://dq41ilg6rwt07"]
+[gd_scene load_steps=15 format=4 uid="uid://dq41ilg6rwt07"]
 
 [ext_resource type="Script" path="res://test_level.gd" id="1_dcd3u"]
 [ext_resource type="Texture2D" uid="uid://d24kl3vtfirna" path="res://colored-transparent_packed.png" id="1_ikmm3"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://yckhujga46bw" path="res://player/checkpoint.tscn" id="7_difeq"]
 [ext_resource type="Script" path="res://components/camera_path_component.gd" id="8_pgbhb"]
 [ext_resource type="Script" path="res://components/camera_controller_component.gd" id="9_d8tso"]
+[ext_resource type="PackedScene" uid="uid://i0lm674wosh7" path="res://level_components/breaking_platform.tscn" id="10_e8tjl"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_gdexo"]
 
@@ -1138,7 +1139,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAwAAsAAAAAAAEAAAAwAAsAAAAAAAIAAAAwAAs
 tile_set = SubResource("TileSet_1kwmo")
 
 [node name="Player" parent="." instance=ExtResource("2_lwsyj")]
-position = Vector2(125, 172)
+position = Vector2(1235, 168)
 respawn_global_position = Vector2(125, 172)
 speed = 200.0
 jump_velocity = -400.0
@@ -1182,3 +1183,12 @@ shape = Rect2(0, 1000, 1150, 600)
 [node name="CameraArea2DComponent3" type="Node2D" parent="CameraControllerComponent"]
 script = ExtResource("8_pgbhb")
 shape = Rect2(1150, 0, 2500, 850)
+
+[node name="BreakingPlatform" parent="." instance=ExtResource("10_e8tjl")]
+position = Vector2(1518, 240)
+
+[node name="BreakingPlatform2" parent="." instance=ExtResource("10_e8tjl")]
+position = Vector2(1616, 239)
+
+[node name="BreakingPlatform3" parent="." instance=ExtResource("10_e8tjl")]
+position = Vector2(1813, 239)
