@@ -34,6 +34,7 @@ func run(delta):
 		#var is_looking_left = mouse_vector.x < 0
 		# movement
 		player.move_x_axis(direction)
+		player.fall(delta)
 		# animation
 		#if is_moving:
 		#	if is_moving_where_looking:

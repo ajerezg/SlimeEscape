@@ -86,8 +86,8 @@ func move_x_axis(direction: float, speed_factor:=1.0):
 	if direction:
 		velocity.x = direction * speed * speed_factor
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
-
+		velocity.x = move_toward(velocity.x, 0, speed/2)
+	
 
 func get_relative_mouse_position(normalize:bool = false):
 	var relative_position = get_global_mouse_position() - global_position
