@@ -1,7 +1,9 @@
 extends AbstractEnemyMovementState
 
+class_name EnemyMovementGroundState
 
 @export var air_state: AbstractEnemyMovementState
+@export var animation_name := "walk"
 @export var avoid_fall: bool = false
 @export var ray_cast_left: RayCast2D 
 @export var ray_cast_right: RayCast2D
@@ -12,7 +14,7 @@ func _ready() -> void:
 	pass
 
 func run(delta):
-	animation_player.play("walk")
+	animation_player.play(animation_name)
 	#print("enemy.direction: " + str(sign(enemy.direction.x)))
 	#print("enemy.wall_normal: " + str(sign(enemy.get_wall_normal().x)))
 	

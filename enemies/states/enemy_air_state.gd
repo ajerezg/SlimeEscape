@@ -1,5 +1,7 @@
 extends AbstractEnemyMovementState
 
+class_name EnemyMovementAirState
+
 @export var ground_state: AbstractEnemyMovementState
 @export var gravity: float = 980.0
 
