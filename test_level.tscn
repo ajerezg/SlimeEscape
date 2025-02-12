@@ -1148,7 +1148,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAwAAsAAAAAAAEAAAAwAAsAAAAAAAIAAAAwAAs
 tile_set = SubResource("TileSet_1kwmo")
 
 [node name="Player" parent="." instance=ExtResource("2_lwsyj")]
-position = Vector2(104, 170)
+position = Vector2(1378, 174)
 respawn_global_position = Vector2(125, 172)
 speed = 200.0
 jump_velocity = -400.0

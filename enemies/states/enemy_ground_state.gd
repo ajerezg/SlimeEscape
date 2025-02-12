@@ -3,6 +3,7 @@ extends AbstractEnemyMovementState
 class_name EnemyMovementGroundState
 
 @export var air_state: AbstractEnemyMovementState
+@export var shoot_state: AbstractEnemyMovementState
 @export var animation_name := "walk"
 @export var avoid_fall: bool = false
 @export var ray_cast_left: RayCast2D 
@@ -23,6 +24,8 @@ func run(delta):
 	enemy.bounce_on_wall()
 	if air_state.can_enter_middle_run():
 		next_state = air_state
+	elif shoot_state and shoot_state.can_enter_middle_run():
+		next_state = shoot_state
 
 func can_enter_middle_run():
 	return enemy.is_on_floor()

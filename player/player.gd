@@ -59,7 +59,7 @@ func _physics_process(delta: float) -> void:
 	if !invulnerability_timer.is_stopped():
 		hitbox_component.monitorable = false
 		# TODO: add animation to indicate invulnerability.
-	get_attack_direction()
+	_get_attack_direction_by_movement()
 	movement_state_machine.run_state(delta)
 	attack_state_machine.run_state(delta)
 	move_and_slide()

@@ -12,6 +12,7 @@ class_name EnemySnake
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var enemy_movement_state_machine: EnemyMovementStateMachine = $EnemyMovementStateMachine
 @onready var enemy_air_state: Node = $EnemyMovementStateMachine/EnemyMovementAirState
+@onready var enemy_shoot_state: EnemyShootState = $EnemyMovementStateMachine/EnemyShootState
 @onready var label: Label = $Label
 
 
@@ -29,6 +30,12 @@ func _physics_process(delta: float) -> void:
 	#attack_state_machine.run_state(delta)
 	move_and_slide()
 
+func move_x():
+	velocity.x = speed * direction.x
+
+func stop_x():
+	velocity.x = 0
+
 func get_hit(damage: float):
 	enemy_movement_state_machine.current_state.next_state = get_hit_state
 	health_component.get_hit(damage)
@@ -40,8 +47,3 @@ func get_killed():
 func _on_hurt_box_component_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hitbox") and area is HitboxComponent:
 		area.get_hit(damage)
-
-
-func _on_range_detector_area_entered(area: Area2D) -> void:
-	if area.is_in_group("player_hitbox") and area is HitboxComponent:
-		print(str(area.entity.global_position))
