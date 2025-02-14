@@ -135,9 +135,13 @@ func _get_attack_direction_by_mouse() -> Vector2:
 
 
 func get_hit(damage: float):
-	invulnerability_timer.start()
-	movement_state_machine.current_state.next_state = get_hit_state
-	health_component.get_hit(damage)
+	#if !is_invulnerable:
+	#is_invulnerable = true
+	if invulnerability_timer.is_stopped():
+		hitbox_component.monitorable = false
+		invulnerability_timer.start()
+		movement_state_machine.current_state.next_state = get_hit_state
+		health_component.get_hit(damage)
 
 func get_killed():
 	global_position = respawn_global_position
